@@ -44,3 +44,26 @@ VALUES ("Finance");
 
 INSERT INTO department (department_name)
 VALUES ("Legal");
+
+-- Example INPUT into role table
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Intern", 0 , 1);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Sales Development Representative", 35000 , 1);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Senior Application Engineer", 100000, 2);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Junior Application Engineer", 75000, 2);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Accountant", 65000, 3);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Human Resources Manager", 80000, 3);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Attorney", 150000, 4);
