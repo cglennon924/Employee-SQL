@@ -6,14 +6,14 @@ CREATE DATABASE employee_management_db;
 -- Ensures which schema/database is used for the following SQL queries. 
 USE employee_management_db;
 
--- Creates table for department 
+-- Creates department table 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT, 
     department_name VARCHAR (50) NOT NULL,
     PRIMARY KEY (id)
 )
 
--- Creates table for roles
+-- Creates role table
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT, 
     title VARCHAR (50) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE role (
     PRIMARY KEY (id)
 )
 
--- Creates table for employee
+-- Creates employee table
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT, 
     first_name VARCHAR (50) NOT NULL, 
@@ -32,7 +32,7 @@ CREATE TABLE employee (
     PRIMARY KEY (id)
 )
 
--- Example INPUT into department table
+-- INPUT into department table
 INSERT INTO department (department_name)
 VALUES ("Development");
 
@@ -71,7 +71,7 @@ VALUES ("Attorney", 150000, 4);
 -- Example INPUT into employee table
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Chris", "Glennon", 1, NULL);
+VALUES ("Christopher", "Glennon", 1, NULL);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Ricky", "Bobby", 2, NULL);
