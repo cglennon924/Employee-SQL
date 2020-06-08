@@ -67,3 +67,26 @@ VALUES ("Human Resources Manager", 80000, 3);
 
 INSERT INTO role (title, salary, department_id)
 VALUES ("Attorney", 150000, 4);
+
+-- Example INPUT into employee table
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Chris", "Glennon", 1, NULL);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Ricky", "Bobby", 2, NULL);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Darth", "Vader", 3, 1);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Han", "Solo", 4, NULL);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Harry", "Potter", 5, NULL);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Alvis", "Dumbledore", 6, 2);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Calvin", "Harris", 7, NULL);
