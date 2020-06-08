@@ -9,15 +9,38 @@ USE employee_management_db;
 -- Creates table for department 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT, 
-    department_name VARCHAR (30) NOT NULL,
+    department_name VARCHAR (50) NOT NULL,
     PRIMARY KEY (id)
 )
 
 -- Creates table for roles
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT, 
-    title VARCHAR (30) NOT NULL,
+    title VARCHAR (50) NOT NULL,
     salary DECIMAL (10,2) NOT NULL, 
     department_id INT NOT NULL,
     PRIMARY KEY (id)
 )
+
+-- Creates table for employee
+CREATE TABLE employee (
+    id INT NOT NULL AUTO_INCREMENT, 
+    first_name VARCHAR (50) NOT NULL, 
+    last_name VARCHAR (50) NOT NULL, 
+    role_id INT NOT NULL, 
+    manager_id INT, 
+    PRIMARY KEY (id)
+)
+
+-- Example INPUT into department table
+INSERT INTO department (department_name)
+VALUES ("Development");
+
+INSERT INTO department (department_name)
+VALUES ("I.T");
+
+INSERT INTO department (department_name)
+VALUES ("Finance");
+
+INSERT INTO department (department_name)
+VALUES ("Legal");
