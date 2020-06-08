@@ -17,7 +17,32 @@ let connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     // run the start function after the connection is made to prompt the user
-    start();
+    lookupEl();
   });
+
+  function lookupEl() {
+    inquirer
+      .prompt([{
+        name: "action",
+        type: "list",
+        message: "What would you like to do?",
+        choices: [
+            "Create",
+            "View",
+            "Update",
+        ]
+    },
+    {
+      name: "option",
+      type: "list",
+      message: "Chose one of the three option's below please",
+      choices: [
+        "Department",
+        "Employee",
+        "Role",
+    ]
+    
+    }])
+  }
 
   
