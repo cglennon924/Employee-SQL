@@ -455,13 +455,13 @@ function updateData(option) {
               choices: managers
             }
           ])
-          .then(function (a){
+          .then(function (i){
             connection.query("UPDATE employee SET ? WHERE ?",
             [{
-              manager_id: a.newManager
+              manager_id: i.newManager
             },
             {
-              id: a.employee
+              id: i.employee
             }],
             function (err){
               if (err) throw err;
