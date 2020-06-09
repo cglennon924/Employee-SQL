@@ -69,69 +69,125 @@ function lookupEl() {
 
 function createData(option) {
     switch(option) {
-      case "Employee":
-        connection.query("SELECT * FROM role", function(err, res){
-          const roles = res.map(object => {
-            return {
-                name: object.title,
-                value: object.id
-            }
-          })
-          connection.query("SELECT * FROM employee WHERE manager_id IS NULL", function(error, result){
-            if (error) throw error
-            const manager = result.map(object => {
-              return {
-                  name: `${object.first_name} ${object.last_name}`,
-                  value: object.id
-              }
-            })
-            inquirer
-              .prompt([{
-                name: "first_name",
-                type: "input",
-                message: "What is the employee's first name?",
-              },
-              {
-                name: "last_name",
-                type: "input",
-                message: "What is the employee's last name?",
-              },
-              {
-                name: "role",
-                type: "list",
-                message: "What is the employee's title",
-                choices: roles
-              },
-              {
-                name: "manager",
-                type: "list",
-                message: "Who is the employee's manager?",
-                choices: manager
-              },
-            ])
-            .then(function(res){
-              connection.query("INSERT INTO employee SET ?", [{
-                first_name: res.first_name,
-                last_name: res.last_name,
-                role_id: res.role, 
-                manager_id: res.manager
-              }], 
-              function (err){
-                if (err) throw err
-                console.log(`${res.first_name} ${res.last_name} has been added to the system`)
-                keepGoing()
-              })
-            })
-          })
-        })
-        break;
       case "Department":
         connection.query("SELECT * FROM department", function(err, res){
           if (err) throw err
           console.log("--------------------------------------------------")
           console.table(res)
           console.log("--------------------------------------------------")
-          createDepartment()
+          newDepartment()
         });
-    }
-}
+        function newDepartment() {
+            inquirer
+              .prompt([{
+                name: "department",
+                type: "input",
+                message: "What department would you like to add to the system ?"
+              }])
+              .then(function(a){
+                connection.query("INSERT INTO department SET ?",
+                {department_name: a.department}, function(err){
+                  if (err) throw err
+                  console.log(`${a.department} has been added to the system`)
+                  keepGoing()
+                })
+              })
+          }
+        case "Role":
+            connection.query("SELECT DISTINCT role.title, department.id, department.department_name FROM department AS department LEFT JOIN role AS role ON department.id = role.department_id ", function(err, res){
+              if (err) throw err
+              console.log("--------------------------------------------------")
+              console.table(res)
+              console.log("--------------------------------------------------")
+              newRole()
+            })
+            function newRole() {
+              inquirer
+                .prompt([{
+                  name: "role",
+                  type: "input",
+                  message: "What role do you widh the create ?"
+                },
+                {
+                  name: "salary", 
+                  type: "number",
+                  message: "What is the salary?"
+                },
+                {
+                  name: "department_id",
+                  type: "number",
+                  message: "What department id is new position associated with?"
+                }
+              ])
+              .then(function (b){
+                connection.query("INSERT INTO role SET ?", 
+                { title: b.role,
+                  salary: b.salary, 
+                  department_id: b.department_id
+                }
+                ,function (err){
+                  if (err) throw err
+                  console.log(`${b.role} has been added to the system`)
+                  console.log("--------------------------------------------------")
+                  keepGoing()
+                })
+              })
+            }
+            case "Employee":
+                connection.query("SELECT * FROM role", function(err, res){
+                  const roles = res.map(object => {
+                    return {
+                        name: object.title,
+                        value: object.id
+                    }
+                  })
+                  connection.query("SELECT * FROM employee WHERE manager_id IS NULL", function(error, result){
+                    if (error) throw error
+                    const manager = result.map(object => {
+                      return {
+                          name: `${object.first_name} ${object.last_name}`,
+                          value: object.id
+                      }
+                    })
+                    inquirer
+                      .prompt([{
+                        name: "first_name",
+                        type: "input",
+                        message: "What is the employee's first name?",
+                      },
+                      {
+                        name: "last_name",
+                        type: "input",
+                        message: "What is the employee's last name?",
+                      },
+                      {
+                        name: "role",
+                        type: "list",
+                        message: "What is the employee's title",
+                        choices: roles
+                      },
+                      {
+                        name: "manager",
+                        type: "list",
+                        message: "Who is the employee's manager?",
+                        choices: manager
+                      },
+                    ])
+                    .then(function(res){
+                      connection.query("INSERT INTO employee SET ?", [{
+                        first_name: res.first_name,
+                        last_name: res.last_name,
+                        role_id: res.role, 
+                        manager_id: res.manager
+                      }], 
+                      function (err){
+                        if (err) throw err
+                        console.log(`${res.first_name} ${res.last_name} has been added to the system`)
+                        keepGoing()
+                      })
+                    })
+                  })
+                })
+                break;
+        }
+      }
