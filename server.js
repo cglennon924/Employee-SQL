@@ -15,7 +15,17 @@ let connection = mysql.createConnection({
 
 // connect to the mysql server and sql database
 connection.connect(function (err) {
-    if (err) throw err;
+    if (err) {
+        console.error("error connecting: " + err.stack);
+        return;
+      }
+      console.log("connected as id " + connection.threadId);
+      console.log("--------------------------------------------------")
+      connection.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.title, role.salary, department.department_name,  employee.manager_id FROM employee AS employee JOIN role AS role ON employee.role_id = role.id JOIN department AS department ON role.department_id = department.id", function(err, res){
+        console.log("WELCOME TO THE EMPLOYEE MANAGEMENT SYSTEM")
+        console.log("--------------------------------------------------")
+        console.table(res)
+        console.log("--------------------------------------------------")
     // run the start function after the connection is made to prompt the user
     lookupEl();
 });
