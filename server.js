@@ -28,6 +28,7 @@ connection.connect(function (err) {
         console.log("--------------------------------------------------")
     // run the start function after the connection is made to prompt the user
     lookupEl();
+})
 });
 
 function lookupEl() {
@@ -495,8 +496,4 @@ function continueEl() {
             console.log(err);
         })
   }
-
-
-  
-    
 
