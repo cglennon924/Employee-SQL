@@ -358,7 +358,7 @@ function updateData(option) {
             if (answer.employeeOption === "Change Employees Role"){
               changeRole()
             } else {
-              switchManager()
+              rotateManager()
             }
       });
       break;
@@ -423,7 +423,7 @@ function updateData(option) {
   }
   
   // Function to change the manager of an employee
-  function switchManager(){
+  function rotateManager(){
     connection.query("SELECT * FROM employee", function(err, res){
       if (err) throw err;
       const employees = res.map(object => {
@@ -466,7 +466,7 @@ function updateData(option) {
             function (err){
               if (err) throw err;
               console.log("--------------------------------------------------")
-              keepGoing()
+              continueEl()
             })
           })
       })
