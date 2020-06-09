@@ -224,7 +224,44 @@ function viewData(option) {
             } 
           )
         break;
-
+        case "Role":
+            connection.query("SELECT * FROM role", function(err, res){
+              if (err) throw err;
+              console.log("--------------------------------------------------")
+              console.table(res)
+              console.log("--------------------------------------------------")
+              continueEl()
+            })
+            break;
+          case "Department":
+              inquirer
+                .prompt([
+                  {
+                    name: "option",
+                    type: "list",
+                    message: "What would you like to view in Employee Table ?",
+                    choices: [
+                      "View the Department Table", 
+                      "View each Departments Budget"
+                    ]
+                  }
+                ])
+                .then (function (a){
+                  if (a.option === "View the Department Table"){
+                  connection.query("SELECT * FROM department", function(err, res){
+                    if (err) throw err;
+                    console.log("--------------------------------------------------")
+                    console.table(res)
+                    console.log("--------------------------------------------------")
+                    continueEl()
+                  })
+                } else {
+                  viewDeptBudget()
+                }
+              })
+            break;
+        }
+      }
       // Function to continue  or not
 function continueEl() {
     inquirer.prompt({
@@ -241,7 +278,7 @@ function continueEl() {
                 case "EXIT":
                     connection.end();
                 break;
-                
+               
             }
         })
         .catch(function (err) {
@@ -249,4 +286,5 @@ function continueEl() {
         })
   }
   
+    
 
