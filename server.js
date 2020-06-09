@@ -89,7 +89,7 @@ function createData(option) {
                 {department_name: a.department}, function(err){
                   if (err) throw err
                   console.log(`${a.department} has been added to the system`)
-                  keepGoing()
+                  continueEl()
                 })
               })
           }
@@ -129,7 +129,7 @@ function createData(option) {
                   if (err) throw err
                   console.log(`${b.role} has been added to the system`)
                   console.log("--------------------------------------------------")
-                  keepGoing()
+                  continueEl()
                 })
               })
             }
@@ -183,7 +183,7 @@ function createData(option) {
                       function (err){
                         if (err) throw err
                         console.log(`${res.first_name} ${res.last_name} has been added to the system`)
-                        keepGoing()
+                        continueEl()
                       })
                     })
                   })
@@ -191,4 +191,28 @@ function createData(option) {
                 break;
         }
       }
-      
+      // Function to continue  or not
+function continueEl() {
+    inquirer.prompt({
+            name: "action",
+            type: "list",
+            message: "Do you wish to continue?",
+            choices: ["CONTINUE","EXIT"]
+        })
+        .then(function (res) {
+            switch (res.action) {
+                case "CONTINUE":
+                    lookupEl();
+                    break;
+                case "EXIT":
+                    connection.end();
+                break;
+                
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
+  }
+  
+
