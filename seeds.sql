@@ -11,7 +11,7 @@ CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT, 
     department_name VARCHAR (30) NOT NULL,
     PRIMARY KEY (id)
-)
+);
 
 -- Creates role table
 CREATE TABLE roles (
@@ -20,7 +20,7 @@ CREATE TABLE roles (
     salary DECIMAL (10,2) NOT NULL, 
     department_id INT NOT NULL,
     PRIMARY KEY (id)
-)
+);
 
 -- Creates employee table
 CREATE TABLE employee (
@@ -30,7 +30,7 @@ CREATE TABLE employee (
     role_id INT NOT NULL, 
     manager_id INT, 
     PRIMARY KEY (id)
-)
+);
 
 -- INPUT into department table
 INSERT INTO department (department_name)
