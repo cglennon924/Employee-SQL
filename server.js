@@ -43,6 +43,26 @@ connection.connect(function(err) {
     ]
     
     }])
+    .then(function(answer) {
+        switch (answer.action) {
+        case "Create":
+          createData();
+          break;
+  
+        case "View":
+          viewData();
+          break;
+  
+        case "Update":
+          updateData();
+          break;
+  
+        
+        }
+      }).catch(function(err){
+        console.log(err)
+      })
+      
   }
 
   
