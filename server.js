@@ -191,6 +191,40 @@ function createData(option) {
                 break;
         }
       }
+
+// VIEW INFORMATION FUNCTIONS
+//viewInfo allows users to view each table
+function viewData(option) {
+    switch(option) {
+      case "Employee":
+        //for employee users will be prompted as to whether they wwant to view by manager or jus view the table
+        inquirer
+          .prompt([
+            {
+              name: "option",
+              type: "list",
+              message: "What would you like to view in Employee Table ?",
+              choices: [
+                "View the Employee Table", 
+                "View the Employees by Manager"
+              ]
+            }
+          ])
+          .then(function (a){
+            if (a.option === "View the Employee Table"){
+              connection.query("SELECT * from employee", function(err, res){
+                if (err) throw err;
+                console.log("--------------------------------------------------")
+                console.table(res)
+                console.log("--------------------------------------------------")
+                continueEl()
+              })
+            } else (a.option === "View the Employees by Manager") 
+              viewByManager()
+            } 
+          )
+        break;
+
       // Function to continue  or not
 function continueEl() {
     inquirer.prompt({
