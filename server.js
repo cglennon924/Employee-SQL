@@ -256,12 +256,212 @@ function viewData(option) {
                     continueEl()
                   })
                 } else {
-                  viewDeptBudget()
+                  viewBudget()
                 }
               })
             break;
         }
       }
+
+//view by manager prompt is called and returns employees whos manager is employee
+function viewByManager(){
+    connection.query("SELECT * FROM employee WHERE manager_id IS NULL", function(error, result){
+      if (error) throw error
+      const managers = result.map(object=> {
+        return {
+          name : `${object.first_name} ${object.last_name}`,
+          value: object.id
+        }
+      })
+      inquirer
+        .prompt([
+          {
+            name: "managerChoice",
+            type: "list",
+            message: "Which Managers Employees do you want to view ?",
+            choices: managers
+          }
+        ])
+        .then(function (a){
+          connection.query("SELECT * FROM employee WHERE manager_id = ?", [a.managerChoice], function(error,res){
+            if (error) throw error;
+            console.log("--------------------------------------------------")
+            console.table(res)
+            console.log("--------------------------------------------------")
+            continueEl()
+          })
+        })
+    })  
+  }
+  
+  //Function to view the sum of the salaries for a given department
+  function viewBudget(){
+    connection.query("SELECT DISTINCT role.department_id, department.department_name FROM role AS role JOIN department AS department ON role.department_id = department.id", function(err, res){
+      if (err) throw err
+      const department = res.map(object=> {
+        return {
+          name : object.department_name,
+          value: object.department_id
+        }
+      })
+      inquirer
+        .prompt([
+          {
+            name: "budget", 
+            type: "list",
+            message: "Which departments budget would you like to view",
+            choices: department
+          }
+        ])
+        .then(function (a){
+          connection.query("SELECT DISTINCT department.department_name, sum(role.salary) AS Allocated_Budget FROM role AS role JOIN department AS department ON role.department_id = department.id WHERE role.department_id = ?", [a.budget], function(err, res){
+            if (err) throw err;
+            console.log("--------------------------------------------------")
+            console.table(res)
+            console.log("--------------------------------------------------")
+            continueEl()
+          })
+        })
+    })
+  }
+
+
+  // UPDATE FUNCTIONS
+//updateInfo to allow the user to update employee table. Department and Role tables do not have this capability at this time. 
+function updateData(option) {
+    switch(option){
+      case "Employee":
+        inquirer
+          .prompt([
+            {
+              name: "employeeOption",
+              type: "list",
+              message: "What would you like to update in the Employee table ?",
+              choices:[
+                "Change Employees Role",
+                "Change Employees Manager"
+              ]
+            }
+          ])
+          .then(function(answer){
+            if (answer.employeeOption === "Change Employees Role"){
+              changeRole()
+            } else {
+              switchManager()
+            }
+      });
+      break;
+      case "Department":
+        console.log("Apologize, we cannot update the Department Table at this time")
+        continueEl()
+      break;
+      case "Role":
+        console.log("Apologize, we cannot update the Role Table at this time")
+        continueEl()
+      break;  
+    }
+  }
+  
+  //Function changeRole updates a employees role to a desired position
+  function changeRole (){
+    connection.query("SELECT * FROM role", function(err, res){
+      if (err) throw err;
+      const roles = res.map(object => {
+      return {
+          name: object.title,
+          value: object.id
+      }
+      })
+      connection.query("SELECT * FROM employee", function(error, result){
+        if (error) throw error;
+        const employees = result.map(object => {
+          return {
+            name : `${object.first_name} ${object.last_name}`,
+            value: object.id
+          }
+        })
+        inquirer
+          .prompt([
+          {
+            name: "employee", 
+            type: "list", 
+            message: "Which employee's position would you like to update ?", 
+            choices: employees
+          },
+          {
+            name: "newRole",
+            type: "list",
+            message: "What would you like the employees new role to be ?",
+            choices: roles
+          }
+        ])
+        .then(function (a){
+          connection.query("UPDATE employee SET ? WHERE ?", 
+          [{role_id: a.newRole
+          },
+          {id: a.employee
+          }],
+          function(err){
+            if (err) throw err;
+            console.log("--------------------------------------------------")
+            continueEl()
+          })
+        })
+      })
+    })
+  }
+  
+  // Function to change the manager of an employee
+  function switchManager(){
+    connection.query("SELECT * FROM employee", function(err, res){
+      if (err) throw err;
+      const employees = res.map(object => {
+        return {
+          name : `${object.first_name} ${object.last_name}`,
+          value: object.id
+        }
+      })
+      connection.query("SELECT * FROM employee WHERE manager_id IS NULL", function(error, result){
+        if (error) throw error;
+        const managers = result.map(object=> {
+          return {
+            name : `${object.first_name} ${object.last_name}`,
+            value: object.id
+          }
+        })
+        inquirer
+          .prompt([
+            {
+              name: "employee",
+              type: "list", 
+              message: "For which Employee would you like update their Manager ?",
+              choices: employees
+            },
+            {
+              name: "newManager",
+              type: "list", 
+              message: "Which Manager would you like to have as the Employees new Manager ?", 
+              choices: managers
+            }
+          ])
+          .then(function (a){
+            connection.query("UPDATE employee SET ? WHERE ?",
+            [{
+              manager_id: a.newManager
+            },
+            {
+              id: a.employee
+            }],
+            function (err){
+              if (err) throw err;
+              console.log("--------------------------------------------------")
+              keepGoing()
+            })
+          })
+      })
+    })
+  }
+  
       // Function to continue  or not
 function continueEl() {
     inquirer.prompt({
@@ -285,6 +485,8 @@ function continueEl() {
             console.log(err);
         })
   }
+
+
   
     
 
