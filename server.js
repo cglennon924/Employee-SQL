@@ -1,6 +1,6 @@
 const mysql = require("mysql")
 const inquirer = require("inquirer")
-const cTable = require("console.table")
+const consoleTable = require("console.table")
 
 require('events').EventEmitter.prototype._maxListeners = 100;
 
