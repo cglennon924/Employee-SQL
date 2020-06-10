@@ -57,15 +57,15 @@ function lookupEl() {
         .then(function (answer) {
             switch (answer.action) {
                 case "Create":
-                    createData();
+                    createData(answer.option);
                     break;
 
                 case "View":
-                    viewData();
+                    viewData(answer.option);
                     break;
 
                 case "Update":
-                    updateData();
+                    updateData(answer.option);
                     break;
 
 
@@ -495,5 +495,5 @@ function continueEl() {
         .catch(function (err) {
             console.log(err);
         })
-  }
+      }
 
