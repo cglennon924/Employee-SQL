@@ -117,7 +117,7 @@ function createData(option) {
           .prompt([{
             name: "role",
             type: "input",
-            message: "What role do you widh the create ?"
+            message: "What role do you wish to create ?"
           },
           {
             name: "salary",
