@@ -51,7 +51,7 @@ INSERT INTO role (title, salary, department_id)
 VALUES ("Intern", 0 , 1);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Sales Development Representative", 35000 , 1);
+VALUES ("Sales Representative", 35000 , 1);
 
 INSERT INTO role (title, salary, department_id)
 VALUES ("Senior Application Engineer", 100000, 2);
