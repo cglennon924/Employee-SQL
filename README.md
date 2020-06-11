@@ -1,5 +1,8 @@
 # Employee-SQL
 
+![image](https://user-images.githubusercontent.com/63322716/84333679-6e0f6680-ab5e-11ea-8b3a-0990135421e1.png)
+
+
 This project required more in-depth backend development. I was required to make a system for: creating, viewing,s adding roles,departments and joining them up to their respective managers. The general skeleton was not too difficult, but figuring out how to implement this with mysql was the real challenge. On the other hand, it was nice to finally check to see if my code worked before being deployed.
 
 * **department**:

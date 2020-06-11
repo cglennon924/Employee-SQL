@@ -300,8 +300,9 @@ function viewByManager() {
           console.log("--------------------------------------------------")
           console.table(res)
           console.log("--------------------------------------------------")
-          continueEl()
+          
         })
+        continueEl()
       })
   })
 }
