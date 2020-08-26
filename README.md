@@ -44,12 +44,12 @@ Bonus points if you're able to:
 
   * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
 
-We can frame this challenge as follows:
 
+## User Story
 ```
-As a business owner
-I want to be able to view and manage the departments, roles, and employees in my company
-So that I can organize and plan my business
+AS A business owner
+I WANT to be able to view and manage the departments, roles, and employees in my company
+SO THAT I can organize and plan my business
 ```
 
 
